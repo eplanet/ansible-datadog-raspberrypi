@@ -1,0 +1,3 @@
+---
+datadog_agent_home: /opt/datadog-agent
+datadog_log_file: /var/log/datadog-agent.log

@@ -1,0 +1,33 @@
+---
+- name: datadog-ansible-raspberrypi dependencies
+  action: apt pkg={{item}} state=installed
+  with_items:
+  - libpython2.7-dev
+  - sysstat
+- name: datadog-ansible-raspberrypi check installation
+  stat: path={{ datadog_agent_home }}
+  register: dd_agent_installed
+- name: datadog-ansible-raspberrypi install agent
+  environment:
+    DD_API_KEY: "{{ datadog_api_key }}"
+    DD_HOME: "{{ datadog_agent_home }}"
+    DD_START_AGENT: 0
+  shell: sh -c "$(curl -L https://raw.githubusercontent.com/DataDog/dd-agent/master/packaging/datadog-agent/source/setup_agent.sh)"
+  when: not dd_agent_installed.stat.exists
+- name: datadog-ansible-raspberrypi setup hostname
+  when: datadog_hostname is defined
+  lineinfile:
+    path: "{{ datadog_agent_home }}/agent/datadog.conf"
+    regexp: '^# hostname='
+    line: 'hostname={{ datadog_hostname }}'
+- name: datadog-ansible-raspberrypi register rc.local
+  blockinfile:
+    path: /etc/rc.local
+    insertbefore: "exit 0"
+    content: "nohup sh {{ datadog_agent_home }}/bin/agent > {{ datadog_log_file }} &"
+- name: datadog-ansible-raspberrypi check agent running
+  shell: ps -ef | grep "python agent/ddagent.py --use_simple_http_client=1" | grep -v grep | wc -l
+  register: dd_agent_running
+- name: datadog-ansible-raspberrypi starting agent
+  shell: "nohup sh {{ datadog_agent_home }}/bin/agent > {{ datadog_log_file}} &"
+  when: dd_agent_running.rc == 0
