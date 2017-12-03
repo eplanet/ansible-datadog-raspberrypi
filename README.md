@@ -40,3 +40,6 @@ Installation process follow this order:
 
 # License
 [Apache 2.0](LICENSE)
+
+# Contributing
+Contributions very welcome! If you notice any issue or room for improvement, do not hesitate to open an issue or submit a pull request.
