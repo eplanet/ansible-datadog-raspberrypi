@@ -17,5 +17,26 @@ Installation process follow this order:
 - `datadog_log_file`: Override the logging file path. Default: /var/log/datadog-agent.log
 - `datadog_hostname` (optional): Override the hostname reported to Datadog
 
+# Example playbook
+## Minimal
+```yaml
+- hosts: servers
+  roles:
+    - { role: Datadog.datadog, become: yes, datadog_api_key: "123456" }
+```
+
+## Overriding variables
+```yaml
+---
+- hosts: servers
+  roles:
+    - { role: Datadog.datadog, become: yes }
+  vars:
+    datadog_api_key: "123456"
+    datadog_agent_home: "/home/pi/datadog-agent"
+    datadog_log_file: "/home/pi/datadog-agent/logs"
+    datadog_hostname: "myraspberrypi"
+```
+
 # License
 [Apache 2.0](LICENSE)
