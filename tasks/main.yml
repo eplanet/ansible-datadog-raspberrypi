@@ -4,6 +4,9 @@
   with_items:
   - libpython2.7-dev
   - sysstat
+  - libpq-dev
+  - unixodbc-dev
+  - libffi-dev
 - name: datadog-ansible-raspberrypi check installation
   stat: path={{ datadog_agent_home }}
   register: dd_agent_installed
