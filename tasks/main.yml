@@ -4,9 +4,14 @@
   with_items:
   - libpython2.7-dev
   - sysstat
+- name: datadog-ansible-raspberrypi dependencies for integrations
+  action: apt pkg={{item}} state=installed
+  with_items:
   - libpq-dev
   - unixodbc-dev
   - libffi-dev
+  - libssl-dev
+  when: datadog_skip_integrations == 0
 - name: datadog-ansible-raspberrypi check installation
   stat: path={{ datadog_agent_home }}
   register: dd_agent_installed
@@ -15,6 +20,7 @@
     DD_API_KEY: "{{ datadog_api_key }}"
     DD_HOME: "{{ datadog_agent_home }}"
     DD_START_AGENT: 0
+    DD_SKIP_INTEGRATIONS: "{{ datadog_skip_integrations }}"
   shell: sh -c "$(curl -L https://raw.githubusercontent.com/DataDog/dd-agent/master/packaging/datadog-agent/source/setup_agent.sh)"
   when: not dd_agent_installed.stat.exists
 - name: datadog-ansible-raspberrypi setup hostname

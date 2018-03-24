@@ -12,9 +12,10 @@ Installation process follow this order:
 - Launch Datadog agent
 
 # Variables
-- `datadog_api_key`: You Datadog API key, found [here](https://app.datadoghq.com/account/settings#api). No default value!
+- `datadog_api_key`: Your Datadog API key, found [here](https://app.datadoghq.com/account/settings#api). No default value!
 - `datadog_agent_home`: The directory to install the agent to. Default: /opt/datadog-agent
 - `datadog_log_file`: Override the logging file path. Default: /var/log/datadog-agent.log
+- `datadog_skip_integrations`: Tell installation script to skip integrations installation, values: 1 to skip, 0 to install. Default: 1
 - `datadog_hostname` (optional): Override the hostname reported to Datadog
 
 # Example playbook
@@ -34,6 +35,7 @@ Installation process follow this order:
   vars:
     datadog_api_key: "123456"
     datadog_agent_home: "/home/pi/datadog-agent"
+    datadog_skip_integrations: 1
     datadog_log_file: "/home/pi/datadog-agent/logs"
     datadog_hostname: "myraspberrypi"
 ```
