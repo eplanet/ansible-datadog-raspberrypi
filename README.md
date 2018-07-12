@@ -23,7 +23,7 @@ Installation process follow this order:
 ```yaml
 - hosts: servers
   roles:
-    - { role: Datadog.datadog, become: yes, datadog_api_key: "123456" }
+    - { role: ansible-datadog-raspberrypi, become: yes, datadog_api_key: "123456" }
 ```
 
 ## Overriding variables
@@ -31,7 +31,7 @@ Installation process follow this order:
 ---
 - hosts: servers
   roles:
-    - { role: Datadog.datadog, become: yes }
+    - { role: ansible-datadog-raspberrypi, become: yes }
   vars:
     datadog_api_key: "123456"
     datadog_agent_home: "/home/pi/datadog-agent"
