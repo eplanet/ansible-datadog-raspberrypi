@@ -1,11 +1,11 @@
 ---
 - name: datadog-ansible-raspberrypi dependencies
-  action: apt pkg={{item}} state=installed
+  action: apt pkg={{item}} state=present
   with_items:
   - libpython2.7-dev
   - sysstat
 - name: datadog-ansible-raspberrypi dependencies for integrations
-  action: apt pkg={{item}} state=installed
+  action: apt pkg={{item}} state=present
   with_items:
   - libpq-dev
   - unixodbc-dev
