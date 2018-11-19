@@ -1,16 +1,12 @@
 ---
 - name: datadog-ansible-raspberrypi dependencies
-  action: apt pkg={{item}} state=present
-  with_items:
-  - libpython2.7-dev
-  - sysstat
+  apt:
+    state: present
+    pkg: [ 'libpython2.7-dev', 'sysstat' ]
 - name: datadog-ansible-raspberrypi dependencies for integrations
-  action: apt pkg={{item}} state=present
-  with_items:
-  - libpq-dev
-  - unixodbc-dev
-  - libffi-dev
-  - libssl-dev
+  apt:
+    state: present
+    pkg: [ 'libpq-dev', 'unixodbc-dev', 'libffi-dev', 'libssl-dev' ]
   when: datadog_skip_integrations == 0
 - name: datadog-ansible-raspberrypi check installation
   stat: path={{ datadog_agent_home }}
