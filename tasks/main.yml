@@ -11,13 +11,20 @@
 - name: datadog-ansible-raspberrypi check installation
   stat: path={{ datadog_agent_home }}
   register: dd_agent_installed
+- name: datadog-ansible-raspberrypi copy datadog-agent installation script
+  ansible.builtin.copy:
+    src: setup_agent.sh
+    dest: /tmp/setup_agent.sh
+    owner: pi
+    group: pi
+    mode: '0744'
 - name: datadog-ansible-raspberrypi install agent
   environment:
     DD_API_KEY: "{{ datadog_api_key }}"
     DD_HOME: "{{ datadog_agent_home }}"
     DD_START_AGENT: 0
     DD_SKIP_INTEGRATIONS: "{{ datadog_skip_integrations }}"
-  shell: sh -c "$(curl -L https://raw.githubusercontent.com/DataDog/dd-agent/master/packaging/datadog-agent/source/setup_agent.sh)"
+  shell: sh -c "/tmp/setup_agent.sh"
   when: not dd_agent_installed.stat.exists
 - name: datadog-ansible-raspberrypi setup hostname
   when: datadog_hostname is defined
