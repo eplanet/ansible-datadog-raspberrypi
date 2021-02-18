@@ -3,6 +3,16 @@ datadog-ansible-raspberrypi
 
 [![Build Status](https://travis-ci.org/eplanet/ansible-datadog-raspberrypi.svg?branch=master)](https://travis-ci.org/eplanet/ansible-datadog-raspberrypi)
 
+# Deprecation warning
+
+This repository is essentially deprecated, as the best way to install the agent on a Raspberry Pi now is to simply use [offical Datadog Ansible](https://github.com/DataDog/ansible-datadog) role and specify:
+
+```
+datadog_agent_flavor: "datadog-iot-agent"
+```
+
+# Presentation
+
 The installation of Datadog agent on a Raspberry Pi is possible and well explained in that [post](https://help.datadoghq.com/hc/en-us/articles/208163513-Deploying-the-Agent-on-RaspberryPI). However this might be a bit too manual and time consuming, which is why I decided to create that Ansible role to facilitate tedious work.
 
 Installation process follow this order:
